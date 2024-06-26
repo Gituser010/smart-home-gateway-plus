@@ -5,20 +5,17 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jsonvalidator.JsonValidationException;
-import org.apache.camel.component.netty.http.NettyHttpOperationFailedException;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import java.net.ConnectException;
-
 import static io.patriotframework.smarthomeplusgateway.DeviceConstants.*;
 
 /**
  * GatewayRouteBuilder
- *
+ * <p>
  * This class is responsible for creating the routes for the gateway.
  */
 
@@ -26,7 +23,7 @@ import static io.patriotframework.smarthomeplusgateway.DeviceConstants.*;
 public class GatewayRouteBuilder extends RouteBuilder {
 
     @Override
-    public void configure() throws Exception{
+    public void configure() throws Exception {
         CamelContext camelContext = new DefaultCamelContext();
 
 
@@ -86,5 +83,5 @@ public class GatewayRouteBuilder extends RouteBuilder {
                 .throwException(new IllegalArgumentException("Unknown device type"))
                 .end()
                 .unmarshal().json(JsonLibrary.Jackson);
-        }
+    }
 }

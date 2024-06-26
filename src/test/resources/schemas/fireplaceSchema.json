@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "fireplace-schema",
-
   "properties": {
     "label": {
       "default": null,
@@ -27,7 +26,10 @@
     },
     "status": {
       "default": "extinguished",
-      "enum": ["on_fire", "extinguished"],
+      "enum": [
+        "on_fire",
+        "extinguished"
+      ],
       "description": "the status of the fireplace (on_fire,extinguished)",
       "id": "/properties/status",
       "title": "The status schema",

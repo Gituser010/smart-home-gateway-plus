@@ -2,7 +2,7 @@ package io.patriotframework.smarthomeplusgateway;
 
 /**
  * DeviceConstants
- *
+ * <p>
  * This class is responsible for storing constants for device types.
  */
 public class DeviceConstants {

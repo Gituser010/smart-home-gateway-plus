@@ -1,7 +1,5 @@
 package io.patriotframework.smarthomeplusgateway.API;
 
-import io.patriotframework.smarthomeplusgateway.house.House;
-
 /**
  * Class representing all api routes
  */
@@ -9,8 +7,8 @@ public class APIRoutes {
 
     public static final String API_VERSION = "v0.1";
     /**
-    * Beginning of the all api routes. All api endpoints share this prefix.
-    */
+     * Beginning of the all api routes. All api endpoints share this prefix.
+     */
     public static final String API_ROUTE = "/api/v0.1";
     /**
      * Route of the temperature.
@@ -35,38 +33,38 @@ public class APIRoutes {
     /**
      * Route of the light.
      */
-    public static final String LIGHT_ROUTE =  HOUSE_ROUTE_BY_ID + "/light/{label}";
+    public static final String LIGHT_ROUTE = HOUSE_ROUTE_BY_ID + "/light/{label}";
     /**
      * Route of the dimmer light.
      */
-    public static final String DIMMER_LIGHT_ROUTE =  HOUSE_ROUTE_BY_ID + "/dimerLight/{label}";
+    public static final String DIMMER_LIGHT_ROUTE = HOUSE_ROUTE_BY_ID + "/dimerLight/{label}";
     /**
      * Route of the rgb light.
      */
-    public static final String RGB_LIGHT_ROUTE =  HOUSE_ROUTE_BY_ID + "/rgbLight/{label}";
+    public static final String RGB_LIGHT_ROUTE = HOUSE_ROUTE_BY_ID + "/rgbLight/{label}";
     /**
      * Route of the fireplace.
      */
-    public static final String DOOR_ROUTE =  HOUSE_ROUTE_BY_ID + "/door/{label}";
+    public static final String DOOR_ROUTE = HOUSE_ROUTE_BY_ID + "/door/{label}";
     /**
      * Route of the thermometer.
      */
-    public static final String THERMOMETER_ROUTE =  HOUSE_ROUTE_BY_ID + "/thermometer/{label}";
+    public static final String THERMOMETER_ROUTE = HOUSE_ROUTE_BY_ID + "/thermometer/{label}";
     /**
      * Route of the device.
      */
-    public static final String DEVICE_ROUTE =  HOUSE_ROUTE_BY_ID + "/device";
+    public static final String DEVICE_ROUTE = HOUSE_ROUTE_BY_ID + "/device";
     /**
      * Route of the device by id.
      */
-    public static final String DEVICE_ROUTE_BY_ID =  HOUSE_ROUTE_BY_ID + "/device/{id}";
+    public static final String DEVICE_ROUTE_BY_ID = HOUSE_ROUTE_BY_ID + "/device/{id}";
     /**
      * Route of the concrete device.
      */
-    public static final String CONCRETE_DEVICE_ROUTE =  HOUSE_ROUTE_BY_ID + "/device/{deviceType}/{id}";
+    public static final String CONCRETE_DEVICE_ROUTE = HOUSE_ROUTE_BY_ID + "/device/{deviceType}/{id}";
     /**
      * Route of the devices.
      */
-    public static final String DEVICES_ROUTE =   HOUSE_ROUTE_BY_ID + "/devices";
+    public static final String DEVICES_ROUTE = HOUSE_ROUTE_BY_ID + "/devices";
 
 }

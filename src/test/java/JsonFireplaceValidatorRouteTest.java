@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
 
+    @EndpointInject("mock:result")
+    MockEndpoint result;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
@@ -22,8 +25,6 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
             }
         };
     }
-    @EndpointInject("mock:result")
-    MockEndpoint result;
 
     @Test
     public void testDeviceSchemaOk() throws InterruptedException {
@@ -50,7 +51,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testDeviceSchemaMissingName() throws InterruptedException {
         String json = "{\"deviceType\":\"fireplace\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -58,21 +59,23 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testDeviceSchemaMissingDeviceType() throws InterruptedException {
         String json = "{\"label\":\"device1\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testDeviceSchemaMissingAll() throws InterruptedException {
         String json = "{}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testDeviceSchemaExtraField() throws InterruptedException {
         String json = "{\"deviceType\":\"fireplace\",\"label\":\"device1\",\"extra\":\"extra\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -80,7 +83,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testFireplaceSchemaWrongStatus() {
         String json = "{\"deviceType\":\"fireplace\",\"label\":\"device1\",\"status\":\"ano\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -88,7 +91,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testFireplaceSchemaWrongStatusType() {
         String json = "{\"deviceType\":\"fireplace\",\"label\":\"device1\",\"status\":1}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -96,7 +99,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testFireplaceWrongLabelType() {
         String json = "{\"deviceType\":\"fireplace\",\"label\":1,\"status\":\"on_fire\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -104,7 +107,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testFireplaceSchemaWrongEnabledType() {
         String json = "{\"deviceType\":\"fireplace\",\"label\":\"device1\",\"status\":\"on_fire\",\"enabled\":1}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -112,7 +115,7 @@ public class JsonFireplaceValidatorRouteTest extends CamelTestSupport {
     public void testFireplaceSchemaWrongDeviceTypeType() {
         String json = "{\"deviceType\":1,\"label\":\"device1\",\"status\":\"on_fire\",\"enabled\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 }

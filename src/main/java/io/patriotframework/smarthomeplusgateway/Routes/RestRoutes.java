@@ -1,6 +1,5 @@
 package io.patriotframework.smarthomeplusgateway.Routes;
 
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestParamType;
 
@@ -8,7 +7,7 @@ import static io.patriotframework.smarthomeplusgateway.API.APIRoutes.*;
 
 /**
  * RestRoutes
- *
+ * <p>
  * This class is responsible for creating the REST routes for the gateway.
  */
 public class RestRoutes extends RouteBuilder {

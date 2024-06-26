@@ -2,54 +2,51 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "fireplace-schema",
-
-      "properties": {
-        "unit": {
-          "default": "C",
-          "enum": [
-            "C",
-            "F"
-          ],
-          "description": "The measuring unit of thermometer",
-          "id": "/properties/unit",
-          "title": "unit",
-          "type": "string"
-        },
-        "temperature": {
-          "default": 0.0,
-          "description": "temperature red by sensor",
-          "id": "/properties/status",
-          "title": "The temperature schema",
-          "type": "number"
-        },
-
-        "label": {
-          "default": null,
-          "description": "the name of the house",
-          "id": "/properties/label",
-          "title": "The label schema",
-          "type": "string"
-        },
-        "deviceType": {
-          "default": "device",
-          "description": "Type of the device",
-
-          "id": "/properties/deviceType",
-          "title": "The deviceType schema",
-          "type": "string",
-          "const": "Thermometer"
-        },
-        "enabled": {
-          "default":false,
-          "description": "Indicates whether the device is currently enabled and operational.",
-          "id": "/properties/enabled",
-          "title": "The enabled schema",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "label",
-        "deviceType"
+  "properties": {
+    "unit": {
+      "default": "C",
+      "enum": [
+        "C",
+        "F"
       ],
+      "description": "The measuring unit of thermometer",
+      "id": "/properties/unit",
+      "title": "unit",
+      "type": "string"
+    },
+    "temperature": {
+      "default": 0.0,
+      "description": "temperature red by sensor",
+      "id": "/properties/status",
+      "title": "The temperature schema",
+      "type": "number"
+    },
+    "label": {
+      "default": null,
+      "description": "the name of the house",
+      "id": "/properties/label",
+      "title": "The label schema",
+      "type": "string"
+    },
+    "deviceType": {
+      "default": "device",
+      "description": "Type of the device",
+      "id": "/properties/deviceType",
+      "title": "The deviceType schema",
+      "type": "string",
+      "const": "Thermometer"
+    },
+    "enabled": {
+      "default": false,
+      "description": "Indicates whether the device is currently enabled and operational.",
+      "id": "/properties/enabled",
+      "title": "The enabled schema",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "label",
+    "deviceType"
+  ],
   "additionalProperties": false
 }

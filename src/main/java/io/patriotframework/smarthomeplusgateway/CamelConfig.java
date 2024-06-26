@@ -1,15 +1,15 @@
 package io.patriotframework.smarthomeplusgateway;
 
 import io.patriotframework.smarthomeplusgateway.Routes.DeviceRoutes;
-import io.patriotframework.smarthomeplusgateway.Routes.RestRoutes;
 import io.patriotframework.smarthomeplusgateway.Routes.HouseRoutes;
+import io.patriotframework.smarthomeplusgateway.Routes.RestRoutes;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * CamelConfig
- *
+ * <p>
  * This class is responsible for configuring the Camel routes for the gateway.
  */
 @Configuration

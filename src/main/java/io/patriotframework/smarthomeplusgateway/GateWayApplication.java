@@ -12,7 +12,7 @@ public class GateWayApplication {
      * @param args args given to Spring Boot application
      */
     public static void main(String[] args) throws RuntimeException {
-            SpringApplication.run(GateWayApplication.class, args);
+        SpringApplication.run(GateWayApplication.class, args);
     }
 
 }

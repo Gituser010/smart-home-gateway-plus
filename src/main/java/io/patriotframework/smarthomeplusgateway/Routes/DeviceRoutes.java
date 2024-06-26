@@ -3,19 +3,18 @@ package io.patriotframework.smarthomeplusgateway.Routes;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.netty.http.NettyHttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.http.MediaType;
 
 /**
  * DeviceRoutes
- *
+ * <p>
  * This class is responsible for creating the routes for the devices.
  */
 public class DeviceRoutes extends RouteBuilder {
 
     @Override
-    public void configure(){
+    public void configure() {
 
         onException(Exception.class)
                 .handled(true)
@@ -95,21 +94,21 @@ public class DeviceRoutes extends RouteBuilder {
                 .toD("netty-http:${exchangeProperty.HouseAddress}/api/v0.1/house/device/${exchangeProperty.deviceType}/${exchangeProperty.DevID}?throwExceptionOnFailure=false")
                 .choice()
                 //if device exists
-                    .when(simple("${header.CamelHttpResponseCode} == 200"))
-                    //update device using put method
-                    .setHeader(Exchange.HTTP_METHOD, constant("PUT"))
-                    .setBody(simple("${exchangeProperty.DeviceDTO}"))
-                    .marshal().json()
-                    .toD("netty-http:${exchangeProperty.HouseAddress}/api/v0.1/house/device/${exchangeProperty.deviceType}/${exchangeProperty.DevID}?throwExceptionOnFailure=false")
-                    .end()
+                .when(simple("${header.CamelHttpResponseCode} == 200"))
+                //update device using put method
+                .setHeader(Exchange.HTTP_METHOD, constant("PUT"))
+                .setBody(simple("${exchangeProperty.DeviceDTO}"))
+                .marshal().json()
+                .toD("netty-http:${exchangeProperty.HouseAddress}/api/v0.1/house/device/${exchangeProperty.deviceType}/${exchangeProperty.DevID}?throwExceptionOnFailure=false")
+                .end()
                 .log(LoggingLevel.INFO, "Body ${body}")
-                    .choice()
+                .choice()
                 //if device was successfully updated
                 .when(simple("${header.CamelHttpResponseCode} == 200"))
-                    .unmarshal().json(JsonLibrary.Jackson)
-                    .to("direct:validate")
+                .unmarshal().json(JsonLibrary.Jackson)
+                .to("direct:validate")
                 .otherwise()
-                    .unmarshal().json(JsonLibrary.Jackson);
+                .unmarshal().json(JsonLibrary.Jackson);
         /*
          * Delete device
          */

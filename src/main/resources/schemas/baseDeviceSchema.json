@@ -18,7 +18,7 @@
       "type": "string"
     },
     "enabled": {
-      "default":false,
+      "default": false,
       "description": "Indicates whether the device is currently enabled and operational.",
       "id": "/properties/enabled",
       "title": "The enabled schema",

@@ -26,9 +26,8 @@ import java.util.Map;
 public class HouseRoutes extends RouteBuilder {
 
 
-
     @Override
-    public void configure(){
+    public void configure() {
         onException(FindException.class)
                 .handled(true)
                 .log(LoggingLevel.ERROR, "Error: ${exception.message}")

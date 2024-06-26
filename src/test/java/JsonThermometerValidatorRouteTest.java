@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
 
+    @EndpointInject("mock:result")
+    MockEndpoint result;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
@@ -22,8 +25,6 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
             }
         };
     }
-    @EndpointInject("mock:result")
-    MockEndpoint result;
 
     @Test
     public void testThermometerSchemaOk() throws InterruptedException {
@@ -49,7 +50,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaWrongTemperature() {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":\"25.0\",\"enabled\":true,\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -57,7 +58,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaWrongUnit() {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":25.0,\"enabled\":true,\"unit\":1}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -65,21 +66,23 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaMissingName() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"temperature\":25.0}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testThermometerSchemaMissingDeviceType() throws InterruptedException {
         String json = "{\"label\":\"device1\",\"temperature\":25.0,\"enabled\":true,\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
-    
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
+
     @Test
     public void testThermometerSchemaMissingAll() throws InterruptedException {
         String json = "{}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -87,7 +90,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaEnabledNotBoolean() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":25.0,\"enabled\":\"true\",\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -95,7 +98,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaTemperatureNotNumber() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":\"25.0\",\"enabled\":true,\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -103,7 +106,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaUnitNotString() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":25.0,\"enabled\":true,\"unit\":1}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -111,7 +114,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaLabelNotString() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"label\":1,\"temperature\":25.0,\"enabled\":true,\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -119,7 +122,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaDeviceTypeNotString() throws InterruptedException {
         String json = "{\"deviceType\":1,\"label\":\"device1\",\"temperature\":25.0,\"enabled\":true,\"unit\":\"C\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -127,6 +130,7 @@ public class JsonThermometerValidatorRouteTest extends CamelTestSupport {
     public void testThermometerSchemaExtraField() throws InterruptedException {
         String json = "{\"deviceType\":\"thermometer\",\"label\":\"device1\",\"temperature\":25.0,\"enabled\":true,\"unit\":\"C\",\"extraField\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 }

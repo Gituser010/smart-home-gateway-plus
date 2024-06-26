@@ -23,7 +23,8 @@ public class House {
 
     /**
      * Constructor
-     * @param name of the house
+     *
+     * @param name    of the house
      * @param address http address of the house
      */
     public House(String name, String address) {
@@ -33,14 +34,14 @@ public class House {
 
     /**
      * Update house address
+     *
      * @param houseDTO with new http address
      * @throws IllegalArgumentException if house name is null or empty
      */
     public void update(HouseDTO houseDTO) throws IllegalArgumentException {
-        if(houseDTO.getName() != null && !houseDTO.getName().isEmpty()) {
+        if (houseDTO.getName() != null && !houseDTO.getName().isEmpty()) {
             this.address = houseDTO.getAddress();
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("House name can't be null or empty");
         }
     }

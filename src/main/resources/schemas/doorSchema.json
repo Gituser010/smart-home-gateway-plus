@@ -2,9 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "door-schema",
-
   "properties": {
-
     "label": {
       "default": null,
       "description": "the name of the house",
@@ -20,7 +18,7 @@
       "type": "string"
     },
     "enabled": {
-      "default":false,
+      "default": false,
       "description": "Indicates whether the device is currently enabled and operational.",
       "id": "/properties/enabled",
       "title": "The enabled schema",
@@ -28,7 +26,10 @@
     },
     "status": {
       "default": "closed",
-      "enum": ["closed", "opened"],
+      "enum": [
+        "closed",
+        "opened"
+      ],
       "description": "the status of the door (closed,opened)",
       "id": "/properties/status",
       "title": "The status schema",

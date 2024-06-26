@@ -6,14 +6,12 @@ camel:
       context-path: /*
   rest:
     context-path: /
-  allowedIPs:
-    subnet: "0.0.0.0/0"
 
 server:
   port: 8080
+  address: 0.0.0.0
 
 whitelist:
-  allowedSubnets:
-    "0.0.0.0/0"
+  turnOn: false
   allowedHosts:
-    "localhost"
+    "localhost:8080"

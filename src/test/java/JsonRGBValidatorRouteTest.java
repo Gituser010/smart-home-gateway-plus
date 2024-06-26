@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonRGBValidatorRouteTest extends CamelTestSupport {
 
+    @EndpointInject("mock:result")
+    MockEndpoint result;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
@@ -22,8 +25,6 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
             }
         };
     }
-    @EndpointInject("mock:result")
-    MockEndpoint result;
 
     @Test
     public void testRGBSchemaOk() throws InterruptedException {
@@ -49,68 +50,75 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaMissingName() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaMissingDeviceType() throws InterruptedException {
         String json = "{\"label\":\"device1\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaMissingAll() throws InterruptedException {
         String json = "{}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaExtraField() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"extra\":\"extra\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaRedOutOfRange() throws InterruptedException {
         String maxJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":256,\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
         String minJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":-1,\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaGreenOutOfRange() throws InterruptedException {
         String maxJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":256,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
         String minJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":-1,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaBlueOutOfRange() throws InterruptedException {
         String maxJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":256,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", maxJson));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
         String minJson = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":-1,\"enabled\":true,\"switchedOn\":true}";
 
-        thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", minJson));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaSwitchedOnNotBoolean() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":\"true\"}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -118,14 +126,15 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaEnabledNotBoolean() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":255,\"enabled\":\"true\",\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
-        assertTrue(thrown.getCause() instanceof JsonValidationException);    }
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        assertTrue(thrown.getCause() instanceof JsonValidationException);
+    }
 
     @Test
     public void testRGBSchemaRedNotNumber() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":\"255\",\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -133,7 +142,7 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaGreenNotNumber() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":\"255\",\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -141,7 +150,7 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaBlueNotNumber() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":\"255\",\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -149,7 +158,7 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaLabelNotString() throws InterruptedException {
         String json = "{\"deviceType\":\"RGB\",\"label\":1,\"red\":255,\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
@@ -157,7 +166,7 @@ public class JsonRGBValidatorRouteTest extends CamelTestSupport {
     public void testRGBSchemaDeviceTypeNotString() throws InterruptedException {
         String json = "{\"deviceType\":1,\"label\":\"device1\",\"red\":255,\"green\":255,\"blue\":255,\"enabled\":true,\"switchedOn\":true}";
 
-        CamelExecutionException thrown =  assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
+        CamelExecutionException thrown = assertThrows(CamelExecutionException.class, () -> template.sendBody("direct:start", json));
         assertTrue(thrown.getCause() instanceof JsonValidationException);
     }
 
